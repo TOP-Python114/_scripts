@@ -1,5 +1,6 @@
 """Пример нарушения и реализации Принципа Открытости/Закрытости (OCP)."""
 
+from typing import Iterable
 from abc import ABC, abstractmethod
 
 # класс данных
@@ -17,7 +18,7 @@ class Goods:
 #  - взрывной рост сложности расширения
 class GoodsFilter:
     """Фильтрация по различным критериям, прописанным в коде класса."""
-    def __init__(self, goods):
+    def __init__(self, goods: Iterable):
         self.goods = goods
     
     def filter_by_color(self, color):
@@ -65,7 +66,7 @@ class ColorSpec(Specification):
     def __init__(self, color):
         self.color = color.upper()
     
-    def is_satisfied(self, item):
+    def is_satisfied(self, item: Goods):
         return self.color == item.color
 
 class SizeSpec(Specification):
@@ -73,25 +74,25 @@ class SizeSpec(Specification):
     def __init__(self, size):
         self.size = size.upper()
     
-    def is_satisfied(self, item):
+    def is_satisfied(self, item: Goods):
         return self.size == item.size
 
 class AndSpec(Specification):
     """Реализация комбинации критериев с помощью логического 'И'."""
-    def __init__(self, *specs):
+    def __init__(self, *specs: Specification):
         self.specs = specs
     
-    def is_satisfied(self, item):
+    def is_satisfied(self, item: Goods):
         return all(map(
             lambda spec: spec.is_satisfied(item), self.specs
         ))
 
 class OrSpec(Specification):
     """Реализация комбинации критериев с помощью логического 'ИЛИ'."""
-    def __init__(self, *specs):
+    def __init__(self, *specs: Specification):
         self.specs = specs
     
-    def is_satisfied(self, item):
+    def is_satisfied(self, item: Goods):
         return any(map(
             lambda spec: spec.is_satisfied(item), self.specs
         ))
@@ -103,7 +104,7 @@ class BetterFilter(Filter):
     def __init__(self, goods):
         self.goods = goods
     
-    def filter(self, specification):
+    def filter(self, specification: Specification):
         """Итерирование по фильтруемым объектам.
         
         Использование объектов спецификации."""
@@ -113,7 +114,7 @@ class BetterFilter(Filter):
 
 
 products = (
-    Goods('Apple', 'Green', 'small'),
+    Goods('Apple', 'Green', 'Small'),
     Goods('Tree', 'Green', 'Large'),
     Goods('House', 'Blue', 'Large')
 )
