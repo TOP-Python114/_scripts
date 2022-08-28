@@ -9,7 +9,7 @@ def high_level_function(shape: Rectangle):
     w = shape.width
     shape.height = 10
     area_expected = w*10
-    print(f"Ождиаемая площадь: {area_expected}, "
+    print(f"Ожидаемая площадь: {area_expected}, "
           f"полученная через метод: {shape.area}")
 
 
