@@ -60,15 +60,14 @@ class Research:
     #             yield rel[2]
     
     # метод, независимый от способа хранения информации
-    @staticmethod
-    def find_all_children(name: str):
-        return base.find_all_children(name)
+    def find_all_children(self, name: str):
+        return self.base.find_all_children(name)
 
 
-base = Relationships()
-base.add_relation(Person('John'), Person('Matt'))
-base.add_relation(Person('John'), Person('Chris'))
-base.add_relation(Person('Kate'), Person('Max'))
+db = Relationships()
+db.add_relation(Person('John'), Person('Matt'))
+db.add_relation(Person('John'), Person('Chris'))
+db.add_relation(Person('Kate'), Person('Max'))
 
-r = Research(base)
+r = Research(db)
 print(*r.find_all_children('John'), sep='\n')
