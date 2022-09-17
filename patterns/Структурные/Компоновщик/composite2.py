@@ -30,7 +30,9 @@ class NeuronLayer(list):
         self.name = name
 
         for i in range(1, count+1):
-            self.append(Neuron(f'Слой {self.name} Нейрон {i}'))
+            self.append(
+                Neuron(f'Слой {self.name} Нейрон {i}')
+            )
 
     def connect_to(self, other):
         if self is other:
@@ -48,13 +50,17 @@ class NeuronLayer(list):
 n1 = Neuron('Отдельный Нейрон 1')
 n2 = Neuron('Отдельный Нейрон 2')
 
-nl1 = NeuronLayer('Нейронный Слой 1')
+n1.connect_to(n2)
+
+print(n1)
+print(n1.show_connections(), end='\n\n')
+
+print(n2)
+print(n2.show_connections(), end='\n\n\n')
+
+
+nl1 = NeuronLayer('Слой_1')
 nl1.connect_to(n1)
 
 print(n1)
-print(n1.show_connections())
-
-print(nl1, end='\n\n')
-print(nl1[0].show_connections(), end='\n\n')
-print(nl1[1].show_connections())
-
+print(n1.show_connections(), end='\n\n')
