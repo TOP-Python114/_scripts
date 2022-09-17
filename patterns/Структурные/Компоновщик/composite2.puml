@@ -1,0 +1,34 @@
+@startuml
+
+'component "Отдельный_нейрон_1" {
+'    portin inputs
+'    portout outputs
+'}
+'component "Отдельный_нейрон_2" {
+'    portin inputs
+'    portout outputs
+'}
+'
+'node "Слой_нейронов_1" {
+'    component "Нейрон_1" {
+'        portin inputs
+'        portout outputs
+'    }
+'    component "Нейрон_2" {
+'        portin inputs
+'        portout outputs
+'    }
+'}
+'
+'"Отдельный_нейрон_1" <-- "Нейрон_1"
+'"Отдельный_нейрон_1" <-- "Нейрон_2"
+
+() "Отдельный_нейрон_1"
+() "Отдельный_нейрон_2"
+
+node "Слой_нейронов_1" {
+    "Нейрон_1" --> "Отдельный_нейрон_1"
+    "Нейрон_2" --> "Отдельный_нейрон_1"
+}
+
+@enduml
