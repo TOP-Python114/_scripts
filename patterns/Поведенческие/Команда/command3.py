@@ -32,6 +32,7 @@ class BankAccount:
 
 
 class Command(ABC):
+    """Базовый класс команд для различных действий."""
     @abstractmethod
     def execute(self):
         pass
@@ -43,7 +44,7 @@ class Command(ABC):
 
 @dataclass
 class BankAccountCommand(Command):
-    """Команда для различных действий."""
+    """Одна команда."""
     account: BankAccount
     action: Action
     amount: int
@@ -68,6 +69,7 @@ class BankAccountCommand(Command):
 
 
 class CompositeBankAccountCommand(Command, list):
+    """Список команд."""
     def __init__(self, *commands: Command):
         super().__init__()
         for command in commands:
