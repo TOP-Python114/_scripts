@@ -16,7 +16,7 @@ class EmptyHistoryError(InvokerError):
 
 
 class Light:
-    """Приёмник."""
+    """Адресат для команд."""
     @staticmethod
     def turn_on():
         print('Лампа включена')
@@ -27,7 +27,7 @@ class Light:
 
 
 class Switch:
-    """Инициатор."""
+    """Инициатор команд."""
     def __init__(self):
         self._commands: dict[str, 'ICommand'] = {}
         self._history: list[tuple[datetime, str]] = []
@@ -39,8 +39,7 @@ class Switch:
         if command_name in self._commands:
             self._commands[command_name].execute()
             self._history.append(
-                (datetime.now(),
-                 command_name)
+                (datetime.now(), command_name)
             )
         else:
             raise CommandNotRegisteredError(command_name)
@@ -91,3 +90,5 @@ smart_switch.execute('OFF')
 smart_switch.show_history()
 
 smart_switch.replay_last()
+
+smart_switch.show_history(True)
