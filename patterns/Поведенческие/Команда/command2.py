@@ -50,6 +50,7 @@ class BankAccountCommand:
                 self.account.withdraw(self.amount)
             elif self.action is Action.WITHDRAW:
                 self.account.deposit(self.amount)
+            self.success = False
         else:
             pass
 
@@ -65,6 +66,7 @@ withdraw1 = BankAccountCommand(ba1, Action.WITHDRAW, 70)
 withdraw1.execute()
 print(f'ba1 {ba1}\n')
 
+withdraw1.undo()
 withdraw1.undo()
 print(f'ba1 {ba1}\n')
 
