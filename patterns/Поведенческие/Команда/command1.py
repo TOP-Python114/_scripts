@@ -3,12 +3,16 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 
 
-class CommandError(Exception):
+class InvokerError(Exception):
     pass
 
-class CommandNotRegisteredError(CommandError):
+class CommandNotRegisteredError(InvokerError):
     def __init__(self, name: str):
         super().__init__(f"command '{name}' is not registered")
+
+class EmptyHistoryError(InvokerError):
+    def __init__(self):
+        super().__init__('no command has been executed yet')
 
 
 class Light:
@@ -41,6 +45,19 @@ class Switch:
         else:
             raise CommandNotRegisteredError(command_name)
 
+    def show_history(self, newest_first: bool = False):
+        for timestamp, command_name in self._history[::(1, -1)[newest_first]]:
+            print(f'{timestamp:%H:%M:%S}'
+                  f' — {self.__class__.__name__}'
+                  f' — {command_name.upper()}')
+
+    def replay_last(self):
+        if self._history:
+            command_name = self._history[-1][1]
+            self.execute(command_name)
+        else:
+            raise EmptyHistoryError
+
 
 class ICommand(ABC):
     def __init__(self, receiver):
@@ -71,3 +88,6 @@ smart_switch.register('OFF', SwitchOffCommand(torcher))
 smart_switch.execute('ON')
 smart_switch.execute('OFF')
 
+smart_switch.show_history()
+
+smart_switch.replay_last()
