@@ -35,9 +35,7 @@ class CreatureModifier:
         if self.next_modifier:
             return self.next_modifier.clear()
         else:
-            q = CreatureModifier(self.creature)
-            q.previous_modifier = self
-            q.undo()
+            self.undo()
 
     def undo(self):
         self.next_modifier = None
