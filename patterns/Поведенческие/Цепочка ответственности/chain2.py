@@ -11,12 +11,14 @@ class WhatToQuery(Enum):
 
 
 class Event(list):
+    """Вызываемый список методов обработчиков."""
     def __call__(self, *args, **kwargs):
         for function in self:
             function(*args, **kwargs)
 
 
 class Query:
+    """Запрос, в котором вычисляются модифицируемые значения."""
     def __init__(self,
                  creature_name: str,
                  what_to_query: WhatToQuery,
@@ -29,12 +31,14 @@ class Query:
 class Game:
     """Брокер событий."""
     def __init__(self):
-        self.queries = Event()
+        self.handlers = Event()
 
     def perform_query(self,
                       sender: 'Creature',
                       query: Query):
-        self.queries(sender, query)
+        self.handlers(sender, query)
+        # для отладчика
+        pass
 
 
 class Creature:
@@ -51,6 +55,7 @@ class Creature:
     @property
     def attack(self):
         q = Query(self.name, WhatToQuery.ATTACK, self.initial_attack)
+        # выполнение конкретного запроса — это вычисление модифицируемого атрибута существа
         self.game.perform_query(self, q)
         return q.value
 
@@ -68,14 +73,25 @@ class CreatureModifier(ABC):
     def __init__(self, game: Game, creature: Creature):
         self.game = game
         self.creature = creature
-        self.game.queries.append(self.handle)
+        # во время инициализации объекта модификатора его объект метода handle добавляется в список обработчиков
+        self.game.handlers.append(self.handle)
 
     @abstractmethod
     def handle(self, sender: Creature, query: Query):
         pass
 
     def remove_from_queries(self):
-        self.game.queries.remove(self.handle)
+        self.game.handlers.remove(self.handle)
+        # для отладчика
+        pass
+
+    # для входа в блок with
+    def __enter__(self):
+        return self
+
+    # для выхода из блока with
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.game.handlers.remove(self.handle)
 
 
 class DoubleAttackModifier(CreatureModifier):
@@ -83,13 +99,18 @@ class DoubleAttackModifier(CreatureModifier):
         if self.creature.name == sender.name:
             if query.what_to_query is WhatToQuery.ATTACK:
                 query.value *= 2
+        # для отладчика
+        pass
 
 
 class IncreaseDefenseModifier(CreatureModifier):
     def handle(self, sender: Creature, query: Query):
         if self.creature.name == sender.name:
             if query.what_to_query is WhatToQuery.DEFENSE:
-                query.value += 1
+                if self.creature.attack <= 3*query.value:
+                    query.value += 1
+        # для отладчика
+        pass
 
 
 
@@ -99,6 +120,12 @@ print(goblin)
 
 dam = DoubleAttackModifier(new_game, goblin)
 print(goblin)
+idm = IncreaseDefenseModifier(new_game, goblin)
+print(goblin)
 
 dam.remove_from_queries()
+print(goblin)
+
+with DoubleAttackModifier(new_game, goblin):
+    print(goblin)
 print(goblin)
