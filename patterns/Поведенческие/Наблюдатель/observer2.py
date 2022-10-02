@@ -45,29 +45,69 @@ class Monitor(ABC):
     def update(self, subject: Patient):
         pass
 
+    @staticmethod
+    def info_message(text: str):
+        print(f'НОРМАЛЬНО - {text}')
+
+    @staticmethod
+    def warn_message(text: str):
+        print(f'ПРЕДУПРЕЖДЕНИЕ - {text}')
+
+    @staticmethod
+    def emrg_message(text: str):
+        print(f'КРИТИЧНО! {text}')
+
 
 class Thermometer(Monitor):
     def update(self, patient: Patient):
         if patient.__class__ is COVIDPatient:
             temperature = patient.get_value('температура')
+            message = f'ТЕМПЕРАТУРА: {patient.name} - {temperature}'
             if temperature <= 36.4:
-                self.emrg_message(f'{patient.name} - {temperature}')
+                self.emrg_message(message)
             elif 36.5 <= temperature <= 37.0:
-                self.info_message(f'{patient.name} - {temperature}')
+                self.info_message(message)
             elif 37.1 <= temperature <= 38.3:
-                self.warn_message(f'{patient.name} - {temperature}')
-            elif 38.4 <= temperature:
-                self.emrg_message(f'{patient.name} - {temperature}')
+                self.warn_message(message)
+            else:
+                self.emrg_message(message)
 
-    @staticmethod
-    def info_message(text: str):
-        print(f'НОРМАЛЬНО: {text}')
 
-    @staticmethod
-    def warn_message(text: str):
-        print(f'ПРЕДУПРЕЖДЕНИЕ: {text}')
+class Heartbeat(Monitor):
+    def update(self, patient: Patient):
+        if patient.__class__ is COVIDPatient:
+            heartbeat = patient.get_value('пульс')
+            message = f'ПУЛЬС: {patient.name} - {heartbeat}'
+            if heartbeat < 100:
+                self.info_message(message)
+            elif 100 <= heartbeat <= 110:
+                self.warn_message(message)
+            else:
+                self.emrg_message(message)
 
-    @staticmethod
-    def emrg_message(text: str):
-        print(f'КРИТИЧНО: {text}')
 
+class Oxymeter(Monitor):
+    def update(self, patient: Patient):
+        if patient.__class__ is COVIDPatient:
+            saturation = patient.get_value('сатурация')
+            message = f'САТУРАЦИЯ: {patient.name} - {saturation}'
+            if 95 < saturation:
+                self.info_message(message)
+            elif 93 <= saturation <= 95:
+                self.warn_message(message)
+            else:
+                self.emrg_message(message)
+
+
+
+ivan = COVIDPatient('Иван')
+
+monitors = [
+    Thermometer(),
+    Heartbeat(),
+    Oxymeter()
+]
+for m in monitors:
+    ivan.add_monitor(m)
+
+ivan.set_value('температура', 38)
