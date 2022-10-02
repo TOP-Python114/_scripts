@@ -2,6 +2,8 @@
 
 from abc import ABC, abstractmethod
 from numbers import Real
+from datetime import datetime as dt
+from time import sleep
 
 
 class Patient(ABC):
@@ -110,4 +112,13 @@ monitors = [
 for m in monitors:
     ivan.add_monitor(m)
 
-ivan.set_value('температура', 38)
+start_temp = ivan.get_value('температура')
+start_beat = ivan.get_value('пульс')
+start_satur = ivan.get_value('сатурация')
+
+for i in range(1, 61):
+    print(f'\n{dt.now():%H:%M:%S}')
+    ivan.set_value('температура', start_temp+i*0.1)
+    ivan.set_value('пульс', round(start_beat+i*0.4))
+    ivan.set_value('сатурация', round(start_satur-i*0.05))
+    sleep(1)
