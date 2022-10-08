@@ -6,7 +6,9 @@ from random import choice
 class Item(Enum):
     ROCK = 0
     PAPER = 1
-    SCISSORS = 3
+    SCISSORS = 2
+    LIZARD = 3
+    SPOK = 4
 
     @classmethod
     def rand(cls):
@@ -29,11 +31,12 @@ class Strategy(ABC):
 class Rock(Strategy):
     item = Item.ROCK
 
+    # нарушает OCP
     @staticmethod
     def check(other: Item) -> bool:
-        if other is Item.PAPER:
+        if other is Item.PAPER or other is Item.SPOK:
             return False
-        if other is Item.SCISSORS:
+        if other is Item.SCISSORS or other is Item.LIZARD:
             return True
         if other is Item.ROCK:
             raise Tie
@@ -42,11 +45,12 @@ class Rock(Strategy):
 class Paper(Strategy):
     item = Item.PAPER
 
+    # нарушает OCP
     @staticmethod
     def check(other: Item) -> bool:
-        if other is Item.SCISSORS:
+        if other is Item.SCISSORS or other is Item.LIZARD:
             return False
-        if other is Item.ROCK:
+        if other is Item.ROCK or other is Item.SPOK:
             return True
         if other is Item.PAPER:
             raise Tie
@@ -55,13 +59,42 @@ class Paper(Strategy):
 class Scissors(Strategy):
     item = Item.SCISSORS
 
+    # нарушает OCP
     @staticmethod
     def check(other: Item) -> bool:
-        if other is Item.ROCK:
+        if other is Item.ROCK or other is Item.SPOK:
             return False
-        if other is Item.PAPER:
+        if other is Item.PAPER or other is Item.LIZARD:
             return True
         if other is Item.SCISSORS:
+            raise Tie
+
+
+class Lizard(Strategy):
+    item = Item.LIZARD
+
+    # нарушает OCP
+    @staticmethod
+    def check(other: Item):
+        if other is Item.ROCK or other is Item.SCISSORS:
+            return False
+        if other is Item.PAPER or other is Item.SPOK:
+            return True
+        if other is Item.LIZARD:
+            raise Tie
+
+
+class Spok(Strategy):
+    item = Item.LIZARD
+
+    # нарушает OCP
+    @staticmethod
+    def check(other: Item):
+        if other is Item.PAPER or other is Item.LIZARD:
+            return False
+        if other is Item.SCISSORS or other is Item.ROCK:
+            return True
+        if other is Item.SPOK:
             raise Tie
 
 
@@ -69,6 +102,7 @@ class Random(Strategy):
     def __init__(self):
         self.item = Item.rand()
 
+    # нарушает OCP
     def check(self, other: Item):
         if self.item is Item.ROCK:
             return Rock.check(other)
@@ -76,6 +110,10 @@ class Random(Strategy):
             return Paper.check(other)
         if self.item is Item.SCISSORS:
             return Scissors.check(other)
+        if self.item is Item.LIZARD:
+            return Lizard.check(other)
+        if self.item is Item.SPOK:
+            return Spok.check(other)
 
 
 
