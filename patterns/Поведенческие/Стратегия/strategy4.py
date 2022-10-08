@@ -66,15 +66,15 @@ class Scissors(Strategy):
 
 
 class Random(Strategy):
-    item = Item.rand()
+    def __init__(self):
+        self.item = Item.rand()
 
-    @classmethod
-    def check(cls, other: Item):
-        if cls.item is Item.ROCK:
+    def check(self, other: Item):
+        if self.item is Item.ROCK:
             return Rock.check(other)
-        if cls.item is Item.PAPER:
+        if self.item is Item.PAPER:
             return Paper.check(other)
-        if cls.item is Item.SCISSORS:
+        if self.item is Item.SCISSORS:
             return Scissors.check(other)
 
 
@@ -103,7 +103,7 @@ class Player:
         return f'{self.name}: {self.strategy.item.name}'
 
 
-ivan = Player('Ivan', Rock())
+ivan = Player('Ivan')
 serge = Player('Serge')
 
 print(ivan, serge, sep='\n')
