@@ -21,13 +21,14 @@ class AdditionExpression(Expression):
 _methods = {}
 
 def visitor(arg_type: Type[Expression]) -> Callable:
-    """Параметризует декоратор."""
+    """Определяет объект класса, с которым должен работать декорируемый метод."""
 
     def decorator(method_object: Callable) -> Callable:
-        """Декоратор для метода."""
+        """Сохраняет декорируемый метод в словарь по ключу – имени класса объекта, с которым работает метод."""
         _methods[arg_type.__name__] = method_object
 
         def _wrapper(instance_object, object_to_process: Expression) -> None:
+            """Получает из словаря нужный метод в зависимости от класса объекта, с которым должен работать метод."""
             key = object_to_process.__class__.__name__
             method = _methods[key]
             return method(instance_object, object_to_process)
