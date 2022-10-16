@@ -27,19 +27,24 @@ msgentry = ttk.Entry(
 )
 msgentry.grid(row=1, column=0, sticky='nsew')
 
+def process_text():
+    string: str = text_msgentry.get().capitalize()
+    text_botlabel.set(string)
+
 entrybutton = tk.Button(
     mainframe,
     text='n',
     font=('Digits', 16),
-    # command=
+    command=process_text
 )
 entrybutton.grid(row=1, column=1, sticky='nse', padx=(10, 0))
 
+text_botlabel = tk.StringVar()
 botlabel = ttk.Label(
     mainframe,
-    textvariable=text_msgentry,
+    textvariable=text_botlabel,
     background='light yellow',
-    font=('Arounder', 22),
+    font=('Courier New', 18, 'bold'),
     justify='center',
     wraplength=880,
     padding=(10, 5)
@@ -53,5 +58,11 @@ root.columnconfigure(0, weight=1)
 mainframe.rowconfigure(1, weight=0)
 mainframe.rowconfigure(2, weight=1)
 mainframe.columnconfigure(0, weight=1)
+
+def key_return_handler(event):
+    text_botlabel.set(text_msgentry.get() + '\n' + str(event))
+
+root.bind('<Return>', key_return_handler)
+root.bind('<Return>', lambda event: entrybutton.invoke())
 
 root.mainloop()
