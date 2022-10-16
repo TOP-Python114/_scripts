@@ -26,6 +26,14 @@ msgentry = ttk.Entry(
 )
 msgentry.grid(row=1, column=0, sticky='nwe')
 
+entrybutton = tk.Button(
+    mainframe,
+    text='n',
+    font=('Digits', 16),
+    # command=
+)
+entrybutton.grid(row=1, column=1, sticky='nse')
+
 botlabel = ttk.Label(
     mainframe,
     textvariable=text_msgentry,
