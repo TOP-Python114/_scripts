@@ -6,8 +6,8 @@ from typing import Collection
 import re
 
 
-def start_view():
-    print('Приветствую!')
+def start_view() -> None:
+    print('Приветствую в Демонстраторе MVC!')
     sleep(2)
 
 
@@ -20,13 +20,13 @@ def ask_if_show_all() -> str:
     return inp
 
 
-def show_all_view(data: Collection):
+def show_all_view(data: Collection) -> None:
     print(f'В БД всего {len(data)} элементов')
     for elem in data:
         print(elem)
     sleep(10)
 
 
-def end_view():
+def end_view() -> None:
     print('Пока!')
     sleep(2)
