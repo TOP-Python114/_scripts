@@ -1,6 +1,6 @@
 """Игра Сапёр — демонстратор использования архитектурного подхода MVC с GUI."""
 
-from typing import Optional
+from typing import Optional, Generator
 from random import randrange as rr
 
 import tkinter as tk
@@ -102,7 +102,7 @@ class Model:
         else:
             return None
 
-    def get_cell_neighbours(self, row: int, column: int) -> list[Cell]:
+    def get_cell_neighbours(self, row: int, column: int) -> Generator:
         """Возвращает список клеток, соседних с клеткой, заданной переданными индексами."""
         neighbours = []
         for i in range(row-1, row+2):
@@ -110,7 +110,7 @@ class Model:
             if i != row:
                 neighbours += [self.get_cell(i, column)]
             neighbours += [self.get_cell(i, column+1)]
-        return neighbours
+        return (n for n in neighbours if n is not None)
 
     def get_mines_around_cell(self, row: int, column: int) -> int:
         """Подсчитывает и возвращает количество заминированных клеток рядом с клеткой, заданной переданными индексами."""
@@ -187,12 +187,13 @@ class View(tk.Frame):
                     row,
                     width=2, height=1,
                     padx=0, pady=0,
-                    command=lambda: self.controller.on_left_click(i, j)
+                    font=20,
+                    command=lambda r=i, c=j: self.controller.on_left_click(r, c)
                 )
                 btn.pack(side=LEFT)
                 btn.bind(
                     '<Button-3>',
-                    lambda: self.controller.on_right_click(i, j)
+                    lambda: lambda r=i, c=j: self.controller.on_right_click(r, c)
                 )
                 self.buttons[i].append(btn)
 
@@ -330,3 +331,8 @@ class Controller:
         self.view.sync_model()
 
 
+m = Model()
+c = Controller(m)
+v = View(m, c)
+v.pack()
+v.mainloop()
