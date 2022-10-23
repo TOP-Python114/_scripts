@@ -1,6 +1,12 @@
 """Игра Сапёр — демонстратор использования архитектурного подхода MVC с GUI."""
+
 from typing import Optional
 from random import randrange as rr
+
+import tkinter as tk
+from tkinter import ttk
+from tkinter.messagebox import showinfo
+from tkinter.constants import BOTTOM, X, RIGHT, LEFT, SUNKEN
 
 
 class Cell:
@@ -62,7 +68,7 @@ class Model:
         for i in range(self.rows):
             self.table += [[]]
             for j in range(self.columns):
-                self.table[i][j] += [Cell(i, j)]
+                self.table[i] += [Cell(i, j)]
 
     def generate_mines(self) -> None:
         """Располагает заданное количество мин на случайных клетках игрового поля."""
@@ -138,5 +144,149 @@ class Model:
             for n_cell in neighbours:
                 if n_cell.state == 'closed':
                     self.open_cell(n_cell.row, n_cell.column)
+
+
+# noinspection PyAttributeOutsideInit
+class View(tk.Frame):
+    def __init__(self,
+                 model: Model,
+                 controller: 'Controller',
+                 parent=None):
+        super().__init__(parent)
+
+        self.model = model
+        # self.controller = controller
+
+        # self.controller.set_view()
+
+        self.create_board()
+        self.create_panel()
+
+    def create_board(self):
+        try:
+            self.board.pack_forget()
+            self.board.destroy()
+
+            self.rows.set(str(self.model.rows))
+            self.columns.set(str(self.model.columns))
+            self.mines.set(str(self.model.mines))
+        except:
+            pass
+
+        self.board = tk.Frame(self)
+        self.board.pack()
+
+        self.buttons = []
+        for i in range(self.model.rows):
+            row = tk.Frame(self.board)
+            row.pack()
+            self.buttons.append([])
+            for j in range(self.model.columns):
+                btn = tk.Button(
+                    row,
+                    width=2, height=1,
+                    padx=0, pady=0,
+                    # command=lambda: self.controller.on_left_click(i, j)
+                )
+                btn.pack(side=LEFT)
+                btn.bind(
+                    '<Button-3>',
+                    # lambda: self.controller.on_right_click(i, j)
+                )
+                self.buttons[i].append(btn)
+
+    def create_panel(self):
+        panel = tk.Frame(master=self)
+        panel.pack(side=BOTTOM, fill=X)
+
+        tk.Button(
+            panel,
+            text='Новая игра',
+            # command=self.controller.start_new_game
+        ).pack(side=RIGHT)
+
+        self.mines = tk.StringVar(value=str(self.model.mines))
+        tk.Spinbox(
+            panel,
+            from_=MIN_MINES,
+            to=MAX_MINES,
+            textvariable=self.mines,
+            width=4
+        ).pack(side=RIGHT)
+        tk.Label(
+            panel,
+            text='Количество мин: '
+        ).pack(side=RIGHT)
+
+        self.columns = tk.StringVar(value=str(self.model.columns))
+        tk.Spinbox(
+            panel,
+            from_=MIN_COLUMNS,
+            to=MAX_COLUMNS,
+            textvariable=self.columns,
+            width=3
+        ).pack(side=RIGHT)
+        tk.Label(
+            panel,
+            text=' x '
+        ).pack(side=RIGHT)
+
+        self.rows = tk.StringVar(value=str(self.model.rows))
+        tk.Spinbox(
+            panel,
+            from_=MIN_ROWS,
+            to=MAX_ROWS,
+            textvariable=self.rows,
+            width=3
+        ).pack(side=RIGHT)
+        tk.Label(
+            panel,
+            text='Размер поля: '
+        ).pack(side=RIGHT)
+
+    @staticmethod
+    def show_win_message():
+        showinfo('Поздравляем!', 'Вы победили!')
+
+    @staticmethod
+    def show_game_over_message():
+        showinfo('Игра окончена', 'Вы проиграли')
+
+    @property
+    def game_settings(self) -> tuple[int, int, int]:
+        return int(self.rows.get()), int(self.columns.get()), int(self.mines.get())
+
+    def sync_model(self):
+        for i in range(self.model.rows):
+            for j in range(self.model.columns):
+                cell = self.model.get_cell(i, j)
+                if cell:
+                    btn = self.buttons[i][j]
+
+                    if cell.mined and self.model.is_game_over():
+                        btn.config(bg='black', text='')
+
+                    if cell.state == 'closed':
+                        btn.config(text='')
+                    elif cell.state == 'opened':
+                        btn.config(relief=SUNKEN, text='')
+                        if cell.counter > 0:
+                            btn.config(text=cell.counter)
+                        elif cell.mined:
+                            btn.config(bg='red')
+                    elif cell.state == 'flagged':
+                        btn.config(text='P')
+                    elif cell.state == 'questioned':
+                        btn.config(text='?')
+
+    def block_cell(self, row: int, column: int, block: bool = True):
+        btn = self.buttons[row][column]
+        if not btn:
+            return
+
+        if block:
+            btn.bind('<Button-1>', 'break')
+        else:
+            btn.unbind('<Button-1>')
 
 
