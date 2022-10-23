@@ -4,7 +4,6 @@ from typing import Optional
 from random import randrange as rr
 
 import tkinter as tk
-from tkinter import ttk
 from tkinter.messagebox import showinfo
 from tkinter.constants import BOTTOM, X, RIGHT, LEFT, SUNKEN
 
@@ -47,7 +46,10 @@ class Model:
     def __init__(self):
         self.start_game()
 
-    def start_game(self, rows: int = 15, columns: int = 15, mines: int = 50) -> None:
+    def start_game(self,
+                   rows: int = 15,
+                   columns: int = 15,
+                   mines: int = 50) -> None:
         """Инициализирует клетки нового игрового поля.
 
         :param rows: количество строк игрового поля
@@ -155,9 +157,8 @@ class View(tk.Frame):
         super().__init__(parent)
 
         self.model = model
-        # self.controller = controller
-
-        # self.controller.set_view()
+        self.controller = controller
+        self.controller.set_view(self)
 
         self.create_board()
         self.create_panel()
@@ -186,12 +187,12 @@ class View(tk.Frame):
                     row,
                     width=2, height=1,
                     padx=0, pady=0,
-                    # command=lambda: self.controller.on_left_click(i, j)
+                    command=lambda: self.controller.on_left_click(i, j)
                 )
                 btn.pack(side=LEFT)
                 btn.bind(
                     '<Button-3>',
-                    # lambda: self.controller.on_right_click(i, j)
+                    lambda: self.controller.on_right_click(i, j)
                 )
                 self.buttons[i].append(btn)
 
@@ -202,7 +203,7 @@ class View(tk.Frame):
         tk.Button(
             panel,
             text='Новая игра',
-            # command=self.controller.start_new_game
+            command=self.controller.start_new_game
         ).pack(side=RIGHT)
 
         self.mines = tk.StringVar(value=str(self.model.mines))
@@ -288,5 +289,44 @@ class View(tk.Frame):
             btn.bind('<Button-1>', 'break')
         else:
             btn.unbind('<Button-1>')
+
+
+class Controller:
+    def __init__(self, model: Model):
+        self.model = model
+        self.view = None
+
+    def set_view(self, view: View):
+        self.view = view
+
+    def start_new_game(self):
+        settings = self.view.game_settings
+        try:
+            self.model.start_game(*settings)
+        except:
+            self.model.start_game(
+                self.model.rows,
+                self.model.columns,
+                self.model.mines
+            )
+        self.view.create_board()
+
+    def on_left_click(self, row: int, column: int):
+        self.model.open_cell(row, column)
+        self.view.sync_model()
+        if self.model.is_win():
+            self.view.show_win_message()
+            self.start_new_game()
+        elif self.model.is_game_over():
+            self.view.show_game_over_message()
+            self.start_new_game()
+
+    def on_right_click(self, row: int, column: int):
+        self.model.next_cell_mark(row, column)
+        self.view.block_cell(
+            row, column,
+            self.model.get_cell(row, column).state == 'flagged'
+        )
+        self.view.sync_model()
 
 
