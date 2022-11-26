@@ -193,7 +193,7 @@ class View(tk.Frame):
                 btn.pack(side=LEFT)
                 btn.bind(
                     '<Button-3>',
-                    lambda: lambda r=i, c=j: self.controller.on_right_click(r, c)
+                    lambda event, r=i, c=j: self.controller.on_right_click(r, c)
                 )
                 self.buttons[i].append(btn)
 
