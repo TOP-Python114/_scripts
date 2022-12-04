@@ -1,3 +1,5 @@
+from decimal import Decimal as dec
+
 import storage
 
 
@@ -15,8 +17,8 @@ class ModelBasic:
         self._item_type = new_item_type
 
     @staticmethod
-    def create_item(name, price, quantity):
-        storage.create_item(name, price, quantity)
+    def create_item(name, price: str, quantity):
+        storage.create_item(name, dec(price), quantity)
 
     @staticmethod
     def create_items(items):
