@@ -3,5 +3,5 @@ from django.shortcuts import render
 
 
 def index(request):
-    return HttpResponse('Главная страница приложения main проекта helloworld')
+    return render(request, 'main/base.html')
 
