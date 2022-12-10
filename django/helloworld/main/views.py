@@ -3,5 +3,14 @@ from django.shortcuts import render
 
 
 def index(request):
-    return render(request, 'main/base.html')
+    return render(
+        request,
+        'main/base.html',
+        {
+            'head_title': 'Главная',
+            'body_title': 'Добро пожаловать!',
+            'align': 'right',
+            'text': 'главная страница',
+        }
+    )
 
