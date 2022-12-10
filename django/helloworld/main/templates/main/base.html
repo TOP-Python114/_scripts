@@ -6,7 +6,7 @@
 </head>
 <body>
     <h2>{{ body_title }}</h2>
-    <div align="{{ align }}">
+    <div align="{{ align|default:'right' }}">
         <p>{{ text }}</p>
     </div>
 </body>

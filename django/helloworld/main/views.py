@@ -9,7 +9,7 @@ def index(request):
         {
             'head_title': 'Главная',
             'body_title': 'Добро пожаловать!',
-            'align': 'right',
+            # 'align': 'center',
             'text': 'главная страница',
         }
     )
