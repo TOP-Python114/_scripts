@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models import base
 from django.db.models import fields
 
+from transliterate import translit
+
 
 class Author(base.Model):
     first_name = fields.CharField(max_length=30)
@@ -21,6 +23,10 @@ class Publisher(base.Model):
     name = fields.CharField(max_length=50)
     authors = models.ManyToManyField(Author)
     books = models.ManyToManyField(Book)
+
+    @property
+    def name_en(self):
+        return translit(str(self.name).lower(), reversed=True)
 
     def __str__(self):
         return f'{self.name}'

@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 from random import choice
 
-from .models import Book
+from .models import Book, Publisher
 
 
 tips = (
@@ -28,6 +28,18 @@ def index(request):
             # 'align': 'center',
             'text': f"Совет дня:\n{choice(tips)}",
             'books': Book.objects.order_by('author', 'title'),
+        }
+    )
+
+
+def publisher_view(request, pub_obj: Publisher):
+    return render(
+        request,
+        'books/pubs.html',
+        {
+            'head_title': pub_obj.name,
+            'body_title': f'Авторы и книги издательства {pub_obj.name}',
+            'books': pub_obj.books.all()
         }
     )
 
