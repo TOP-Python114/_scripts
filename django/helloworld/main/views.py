@@ -1,6 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from random import choice
+
+from .models import Book
+
 
 tips = (
     'Не печалься о том, что выходит за границы контроля. Не можешь изменить — нечего убиваться.',
@@ -14,15 +18,16 @@ tips = (
 )
 
 
-def index(request, tip_index: int):
+def index(request):
     return render(
         request,
         'main/base.html',
         {
             'head_title': 'Главная',
-            'body_title': 'Добро пожаловать!',
+            'body_title': 'Список книг',
             # 'align': 'center',
-            'text': f"Совет дня:\n{tips[tip_index]}",
+            'text': f"Совет дня:\n{choice(tips)}",
+            'books': Book.objects.order_by('author', 'title'),
         }
     )
 

@@ -9,5 +9,14 @@
     <div align="{{ align|default:'right' }}">
         <p>{{ text }}</p>
     </div>
+    <table cellpadding="10">
+        {% for book in books %}
+            <tr>
+                <td>{{ book.author }}</td>
+                <td>{{ book }}</td>
+                <td>{{ book.publisher_set.get }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>
