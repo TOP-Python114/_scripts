@@ -27,7 +27,7 @@ class Publisher(base.Model):
 
 
 # после каждого изменения модели
-# py manage.py makemigrations main
+# py manage.py makemigrations books
 
 # (опционально) компиляция SQL кода в файл
 # py manage.py sqlmigrate %имя_приложения% %номер_миграции% > %имя_приложения%\migrations\%номер_миграции%.sql

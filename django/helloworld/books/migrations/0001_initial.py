@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=50)),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.author')),
+                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='books.author')),
             ],
         ),
         migrations.CreateModel(
@@ -33,8 +33,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=50)),
-                ('authors', models.ManyToManyField(to='main.author')),
-                ('books', models.ManyToManyField(to='main.book')),
+                ('authors', models.ManyToManyField(to='books.author')),
+                ('books', models.ManyToManyField(to='books.book')),
             ],
         ),
     ]

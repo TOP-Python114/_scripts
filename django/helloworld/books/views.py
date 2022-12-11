@@ -21,7 +21,7 @@ tips = (
 def index(request):
     return render(
         request,
-        'main/base.html',
+        'books/base.html',
         {
             'head_title': 'Главная',
             'body_title': 'Список книг',
