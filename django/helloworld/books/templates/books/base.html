@@ -14,7 +14,7 @@
             <tr>
                 <td>{{ book.author }}</td>
                 <td>{{ book }}</td>
-                <td>{{ book.publisher_set.get }}</td>
+                <td><a href="/books/{{ book.publisher_set.get.name_en }}">{{ book.publisher_set.get }}</a></td>
             </tr>
         {% endfor %}
     </table>

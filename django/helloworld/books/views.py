@@ -39,7 +39,7 @@ def publisher_view(request, pub_obj: Publisher):
         {
             'head_title': pub_obj.name,
             'body_title': f'Авторы и книги издательства {pub_obj.name}',
-            'books': pub_obj.books.all()
+            'books': pub_obj.books.order_by('author')
         }
     )
 
