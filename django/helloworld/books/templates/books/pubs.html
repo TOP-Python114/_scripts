@@ -8,11 +8,13 @@
     <h2>{{ body_title }}</h2>
     <div align="center">
       <table cellpadding="10">
-        {% for book in books %}
+        {% for author in authors %}
+          {% for book in author.book_set.all %}
             <tr>
-                <td>{{ book.author }}</td>
-                <td>{{ book }}</td>
+              <td>{{ author }}</td>
+              <td>{{ book }}</td>
             </tr>
+          {% endfor %}
         {% endfor %}
       </table>
     </div>

@@ -40,4 +40,4 @@ class Publisher(base.Model):
 # > py manage.py sqlmigrate %имя_приложения% %номер_миграции% > %имя_приложения%\migrations\%номер_миграции%.sql
 
 # применить миграции
-# > py manage.py migrate
+# > py manage.py migrate --database=books_db
