@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'books.apps.MainConfig',
+    'books.apps.BooksConfig',
 ]
 
 MIDDLEWARE = [
@@ -80,8 +80,15 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'books_db': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'books.sqlite3',
     }
 }
+DATABASE_ROUTERS = [
+    'books.routers.BooksRouter',
+]
 
 
 # Password validation
