@@ -1,0 +1,46 @@
+BEGIN;
+--
+-- Create model Curator
+--
+-- (no-op)
+--
+-- Create model Department
+--
+-- (no-op)
+--
+-- Create model Faculty
+--
+-- (no-op)
+--
+-- Create model Group
+--
+-- (no-op)
+--
+-- Create model GroupsCurators
+--
+-- (no-op)
+--
+-- Create model GroupsLectures
+--
+-- (no-op)
+--
+-- Create model GroupsStudents
+--
+-- (no-op)
+--
+-- Create model Lecture
+--
+-- (no-op)
+--
+-- Create model Student
+--
+-- (no-op)
+--
+-- Create model Subject
+--
+-- (no-op)
+--
+-- Create model Teacher
+--
+-- (no-op)
+COMMIT;
