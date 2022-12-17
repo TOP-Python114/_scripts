@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>University</title>
+</head>
+<body>
+    <h2>Faculties list</h2>
+    <ul>
+    {% for faculty in object_list %}
+        <li><a href="/{{ faculty.short_en }}{{ faculty.id }}">{{ faculty.name }}</a></li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

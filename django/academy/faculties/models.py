@@ -8,6 +8,14 @@ class Faculty(models.Model):
         managed = False
         db_table = 'faculties'
 
+    @property
+    def short_en(self):
+        return ''.join((
+            word[0]
+            for word in str(self.name).lower().split()
+            if len(word) > 2
+        ))
+
 
 class Department(models.Model):
     building = models.PositiveSmallIntegerField(db_column='Building')
@@ -18,6 +26,14 @@ class Department(models.Model):
     class Meta:
         managed = False
         db_table = 'departments'
+
+    @property
+    def short_en(self):
+        return ''.join((
+            word[0]
+            for word in str(self.name).lower().split()
+            if len(word) > 2
+        ))
 
 
 class Student(models.Model):

@@ -1,3 +1,14 @@
-from django.shortcuts import render
+from django.views.generic import ListView, DetailView
 
-# Create your views here.
+from .models import Faculty
+
+
+class UniversityMainView(ListView):
+    model = Faculty
+    template_name = 'faculties/main.html'
+
+
+class FacultyView(DetailView):
+    model = Faculty
+    template_name = 'faculties/faculty.html'
+
