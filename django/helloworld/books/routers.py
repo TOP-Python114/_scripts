@@ -1,6 +1,6 @@
 # noinspection PyProtectedMember, PyMethodMayBeStatic
 class BooksRouter:
-    app_labels = {'auth', 'books'}
+    app_labels = {'books'}
 
     def db_for_read(self, model, **hints):
         if model._meta.app_label in self.app_labels:
