@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 
 from .models import Faculty
 from .views_fb import university_main_view, faculty_view
@@ -18,8 +18,8 @@ urlpatterns = [
 
 for faculty in Faculty.objects.all():
     urlpatterns += [
-        path(
-            f'{faculty.short_en}{faculty.id}/',
+        re_path(
+            f'{faculty.short_en}{faculty.id}(?P<act>(add|del)?)/',
             faculty_view,
             kwargs={'pk': faculty.id}
         ),

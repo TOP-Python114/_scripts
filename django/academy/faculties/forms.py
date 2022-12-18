@@ -2,7 +2,7 @@ from django import forms
 from django.forms import fields
 
 
-class DepartmentForm(forms.Form):
+class DepartmentAddForm(forms.Form):
     name = fields.CharField(
         label='Name:',
         max_length=100,
@@ -17,5 +17,12 @@ class DepartmentForm(forms.Form):
         label='Building:',
         min_value=1,
         max_value=5
+    )
+
+
+class DepartmentDelForm(forms.Form):
+    name = fields.CharField(
+        label='Name:',
+        max_length=100,
     )
 

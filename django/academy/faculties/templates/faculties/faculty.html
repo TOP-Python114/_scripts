@@ -14,12 +14,26 @@
         {% endfor %}
         </ul>
     </div>
+    <hr>
     <h4>Add department</h4>
     <div>
-        <form action="/{{ object.short_en }}{{ object.id }}/" method="post">
+        <form action="/{{ object.short_en }}{{ object.id }}add/" method="post">
             {% csrf_token %}
             <div>
-                {{ form.as_p }}
+                {{ form_add.as_p }}
+            </div>
+            <div>
+                <input type="submit" name="Submit">
+            </div>
+        </form>
+    </div>
+    <hr>
+    <h4>Delete department</h4>
+    <div>
+        <form action="/{{ object.short_en }}{{ object.id }}del/" method="post">
+            {% csrf_token %}
+            <div>
+                {{ form_del. }}
             </div>
             <div>
                 <input type="submit" name="Submit">
