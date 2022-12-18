@@ -7,10 +7,24 @@
 <body>
     <a href="/">Back</a>
     <h3>Departments list</h3>
-    <ul>
-    {% for department in object.department_set.all %}
-        <li>{{ department.name }}</li>
-    {% endfor %}
-    </ul>
+    <div>
+        <ul>
+        {% for department in object.department_set.all %}
+            <li>{{ department.name }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    <h4>Add department</h4>
+    <div>
+        <form action="/{{ object.short_en }}{{ object.id }}/" method="post">
+            {% csrf_token %}
+            <div>
+                {{ form.as_p }}
+            </div>
+            <div>
+                <input type="submit" name="Submit">
+            </div>
+        </form>
+    </div>
 </body>
 </html>
