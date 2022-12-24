@@ -5,7 +5,7 @@ from .views_fb import university_main_view, faculty_view
 from .views_cb import UniversityMainView, FacultyView
 
 
-FUNCTIONS_OR_CLASS = 1
+FUNCTIONS_OR_CLASS = 0
 
 if FUNCTIONS_OR_CLASS:
     university_main_view = UniversityMainView.as_view()
@@ -19,7 +19,7 @@ urlpatterns = [
 for faculty in Faculty.objects.all():
     urlpatterns += [
         re_path(
-            f'{faculty.short_en}{faculty.id}(?P<act>(add|del)?)/',
+            f'{faculty.short_en}{faculty.id}/',
             faculty_view,
             kwargs={'pk': faculty.id}
         ),

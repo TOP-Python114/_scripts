@@ -18,7 +18,7 @@ def university_main_view(request: HttpRequest):
     )
 
 
-def faculty_view(request: HttpRequest, pk: int, act: str):
+def faculty_view(request: HttpRequest, pk: int):
     # print(f'{act = }')
     if request.method == 'GET':
         return render(
@@ -31,7 +31,7 @@ def faculty_view(request: HttpRequest, pk: int, act: str):
             }
         )
     elif request.method == 'POST':
-        if act == 'add':
+        if 'SubmitAdd' in request.POST:
             form = DepartmentAddForm(request.POST)
             if form.is_valid():
                 dep = Department(
@@ -39,7 +39,7 @@ def faculty_view(request: HttpRequest, pk: int, act: str):
                     **form.cleaned_data
                 )
                 dep.save()
-        elif act == 'del':
+        elif 'SubmitDel' in request.POST:
             form = DepartmentDelForm(request.POST)
             if form.is_valid():
                 qs = Department.objects.filter(name=form.cleaned_data['name'])

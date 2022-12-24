@@ -17,26 +17,26 @@
     <hr>
     <h4>Add department</h4>
     <div>
-        <form action="/{{ object.short_en }}{{ object.id }}add/" method="post">
+        <form action="/{{ object.short_en }}{{ object.id }}/" method="post" name="add">
             {% csrf_token %}
             <div>
                 {{ form_add.as_p }}
             </div>
             <div>
-                <input type="submit" name="Submit">
+                <input type="submit" name="SubmitAdd">
             </div>
         </form>
     </div>
     <hr>
     <h4>Delete department</h4>
     <div>
-        <form action="/{{ object.short_en }}{{ object.id }}del/" method="post">
+        <form action="/{{ object.short_en }}{{ object.id }}/" method="post">
             {% csrf_token %}
             <div>
                 {{ form_del.as_p }}
             </div>
             <div>
-                <input type="submit" name="Submit">
+                <input type="submit" name="SubmitDel">
             </div>
         </form>
     </div>
