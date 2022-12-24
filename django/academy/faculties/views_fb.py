@@ -19,7 +19,7 @@ def university_main_view(request: HttpRequest):
 
 
 def faculty_view(request: HttpRequest, pk: int, act: str):
-    print(f'{act = }')
+    # print(f'{act = }')
     if request.method == 'GET':
         return render(
             request,

@@ -33,7 +33,7 @@
         <form action="/{{ object.short_en }}{{ object.id }}del/" method="post">
             {% csrf_token %}
             <div>
-                {{ form_del. }}
+                {{ form_del.as_p }}
             </div>
             <div>
                 <input type="submit" name="Submit">

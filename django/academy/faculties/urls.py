@@ -5,7 +5,7 @@ from .views_fb import university_main_view, faculty_view
 from .views_cb import UniversityMainView, FacultyView
 
 
-FUNCTIONS_OR_CLASS = 0
+FUNCTIONS_OR_CLASS = 1
 
 if FUNCTIONS_OR_CLASS:
     university_main_view = UniversityMainView.as_view()

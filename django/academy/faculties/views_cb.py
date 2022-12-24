@@ -1,6 +1,9 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, FormView
 
-from .models import Faculty
+from string import ascii_letters as asl
+
+from .forms import DepartmentAddForm
+from .models import Faculty, Department
 
 
 class UniversityMainView(ListView):
@@ -8,7 +11,23 @@ class UniversityMainView(ListView):
     template_name = 'faculties/main.html'
 
 
-class FacultyView(DetailView):
-    model = Faculty
+class FacultyView(FormView):
+    form_class = DepartmentAddForm
     template_name = 'faculties/faculty.html'
 
+    def get_success_url(self):
+        return self.request.path
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object'] = Faculty.objects.get(pk=self.kwargs['pk'])
+        context['form_add'] = context['form']
+        return context
+
+    def form_valid(self, form: DepartmentAddForm):
+        dep = Department(
+            faculty_id=self.kwargs['pk'],
+            **form.cleaned_data
+        )
+        dep.save()
+        return super().form_valid(form)
