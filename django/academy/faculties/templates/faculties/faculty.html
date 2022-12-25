@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ object.name }}</title>
-</head>
-<body>
-    <a href="/">Back</a>
-    <h3>Departments list</h3>
+{% extends base_template|default:"base.html" %}
+
+
+{% block content %}
+    <div align="center">
+        <h2>{{ object.name }}</h2>
+    </div>
     <div>
+        <h3>Departments list</h3>
         <ul>
         {% for department in object.department_set.all %}
             <li>{{ department.name }}</li>
@@ -40,5 +39,9 @@
             </div>
         </form>
     </div>
-</body>
-</html>
+{% endblock content %}
+
+
+{% block footer %}
+{% endblock footer %}
+

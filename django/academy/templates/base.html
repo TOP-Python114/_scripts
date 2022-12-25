@@ -2,30 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ head_title|default:"University" }}</title>
+    <title>{{ page_title|default:"MIT" }}</title>
 </head>
 <body>
+<!-- header -->
     {% block header %}
-        <div>
-            <table>
-                <tr>
-                    <td><a href="/">Main</a></td>
-                    <td><a>About</a></td>
-                    <td><a>Contact form</a></td>
-                </tr>
-            </table>
-            <hr>
-        </div>
+        {% include "includes/navbar.html" %}
     {% endblock header %}
+<!-- /header -->
 
+<!-- content -->
     {% block content %}
     {% endblock content %}
+<!-- /content -->
 
+<!-- footer -->
     {% block footer %}
         <hr>
         <div align="right">
             <p>Developed for studying with Django 4.1</p>
         </div>
     {% endblock footer %}
+<!-- /footer -->
 </body>
 </html>

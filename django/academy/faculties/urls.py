@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 
 from .models import Faculty
-from .views_fb import university_main_view, faculty_view
+from .views_fb import university_main_view, faculties_list_view, faculty_view
 from .views_cb import UniversityMainView, FacultyView
 
 
@@ -14,6 +14,7 @@ if FUNCTIONS_OR_CLASS:
 
 urlpatterns = [
     path('', university_main_view, name='main'),
+    path('faculties/', faculties_list_view, name='faculties'),
 ]
 
 for faculty in Faculty.objects.all():

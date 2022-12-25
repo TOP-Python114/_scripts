@@ -9,11 +9,15 @@ from .models import Faculty, Department
 
 
 def university_main_view(request: HttpRequest):
+    return render(request, 'faculties/main.html')
+
+
+def faculties_list_view(request: HttpRequest):
     return render(
         request,
-        'faculties/main.html',
+        'faculties/faculties_list.html',
         {
-            'object_list': Faculty.objects.all()
+            'object_list': Faculty.objects.all(),
         }
     )
 
@@ -21,11 +25,13 @@ def university_main_view(request: HttpRequest):
 def faculty_view(request: HttpRequest, pk: int):
     # print(f'{act = }')
     if request.method == 'GET':
+        faculty = Faculty.objects.get(pk=pk)
         return render(
             request,
             'faculties/faculty.html',
             {
-                'object': Faculty.objects.get(pk=pk),
+                'page_title': faculty.name,
+                'object': faculty,
                 'form_add': DepartmentAddForm(),
                 'form_del': DepartmentDelForm(),
             }

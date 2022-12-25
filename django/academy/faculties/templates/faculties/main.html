@@ -2,11 +2,14 @@
 
 
 {% block content %}
-    <h2>Faculties list</h2>
-    <ul>
-    {% for faculty in object_list %}
-        <li><a href="/{{ faculty.short_en }}{{ faculty.id }}">{{ faculty.name }}</a></li>
-    {% endfor %}
-    </ul>
+    <div align="center">
+        <h1>Massachusetts Institute of Technology</h1>
+    </div>
+
+    <div>
+        {% block first_part %}
+        {% endblock first_part %}
+    </div>
+
 {% endblock content %}
 
