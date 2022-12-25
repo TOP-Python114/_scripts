@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ head_title|default:"University" }}</title>
+</head>
+<body>
+    {% block header %}
+        <div>
+            <table>
+                <tr>
+                    <td><a href="/">Main</a></td>
+                    <td><a>About</a></td>
+                    <td><a>Contact form</a></td>
+                </tr>
+            </table>
+            <hr>
+        </div>
+    {% endblock header %}
+
+    {% block content %}
+    {% endblock content %}
+
+    {% block footer %}
+        <hr>
+        <div align="right">
+            <p>Developed for studying with Django 4.1</p>
+        </div>
+    {% endblock footer %}
+</body>
+</html>
