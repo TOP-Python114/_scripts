@@ -3,10 +3,12 @@
 
 {% block first_part %}
     <h2>Faculties list</h2>
-    <ul>
-    {% for faculty in object_list %}
-        <li><a href="/{{ faculty.short_en }}{{ faculty.id }}">{{ faculty.name }}</a></li>
-    {% endfor %}
-    </ul>
+    <div class="list-simple">
+        <ul>
+        {% for faculty in object_list %}
+            <li><a href="/{{ faculty.short_en }}{{ faculty.id }}">{{ faculty.name }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
 {% endblock first_part %}
 

@@ -8,6 +8,11 @@ from .forms import DepartmentAddForm, DepartmentDelForm
 from .models import Faculty, Department
 
 
+styles = [
+    'faculties/styles/faculties.css',
+]
+
+
 def university_main_view(request: HttpRequest):
     return render(request, 'faculties/main.html')
 
@@ -17,6 +22,7 @@ def faculties_list_view(request: HttpRequest):
         request,
         'faculties/faculties_list.html',
         {
+            'styles': styles,
             'object_list': Faculty.objects.all(),
         }
     )
@@ -26,10 +32,12 @@ def faculty_view(request: HttpRequest, pk: int):
     # print(f'{act = }')
     if request.method == 'GET':
         faculty = Faculty.objects.get(pk=pk)
+        lstyles = styles + ['faculties/styles/faculty.css']
         return render(
             request,
             'faculties/faculty.html',
             {
+                'styles': lstyles,
                 'page_title': faculty.name,
                 'object': faculty,
                 'form_add': DepartmentAddForm(),

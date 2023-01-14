@@ -7,11 +7,13 @@
     </div>
     <div>
         <h3>Departments list</h3>
-        <ul>
-        {% for department in object.department_set.all %}
-            <li>{{ department.name }}</li>
-        {% endfor %}
-        </ul>
+        <div class="list-simple">
+            <ul>
+            {% for department in object.department_set.all %}
+                <li>{{ department.name }}</li>
+            {% endfor %}
+            </ul>
+        </div>
     </div>
     <hr>
     <h4>Add department</h4>

@@ -1,0 +1,20 @@
+body {
+    background-image: url('../images/background.png');
+    background-size: 100% 100%
+}
+
+label {
+    font-family: 'Yanone Kaffeesatz Regular';
+}
+
+input[type="text"] {
+    width: 90%;
+    font-family: 'Yanone Kaffeesatz Light';
+    font-size: 125%
+}
+
+input[type="number"] {
+    font-family: 'Yanone Kaffeesatz Light';
+    font-size: 130%
+}
+

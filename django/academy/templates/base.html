@@ -1,28 +1,42 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static base_style|default:'styles/base.css' %}">
+    {% for style in styles|default:'' %}
+        <link rel="stylesheet" href="{% static style %}">
+    {% endfor %}
     <title>{{ page_title|default:"MIT" }}</title>
 </head>
 <body>
 <!-- header -->
-    {% block header %}
-        {% include "includes/navbar.html" %}
-    {% endblock header %}
+    <div class="header-simple">
+        {% block header %}
+            {% include "includes/navbar.html" %}
+        {% endblock header %}
+    </div>
 <!-- /header -->
 
 <!-- content -->
-    {% block content %}
-    {% endblock content %}
+    <div class="content-simple">
+        {% block content %}
+        {% endblock content %}
+    </div>
 <!-- /content -->
 
 <!-- footer -->
-    {% block footer %}
-        <hr>
-        <div align="right">
-            <p>Developed for studying with Django 4.1</p>
-        </div>
-    {% endblock footer %}
+    <div class="footer-simple">
+        {% block footer %}
+            <hr>
+            <div align="right">
+                <p>Developed for studying with Django 4.1</p>
+            </div>
+            <img src="{% static 'images/bottom_cr.png' %}"
+                 alt=""
+                 width="100%">
+        {% endblock footer %}
+    </div>
 <!-- /footer -->
 </body>
 </html>
