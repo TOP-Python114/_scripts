@@ -1,0 +1,14 @@
+{% extends base_template|default:"bs_faculties/main.html" %}
+
+
+{% block first_part %}
+    <h2 class="display-2">Faculties list</h2>
+    <div>
+        <ul class="list-style">
+        {% for faculty in object_list %}
+            <li><a href="/{{ faculty.short_en }}{{ faculty.id }}">{{ faculty.name }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock first_part %}
+

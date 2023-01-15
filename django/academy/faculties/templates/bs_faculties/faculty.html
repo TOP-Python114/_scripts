@@ -1,0 +1,59 @@
+{% extends base_template|default:"bs_base.html" %}
+
+{% load bootstrap5 %}
+
+
+{% block content %}
+    <div class="row justify-content-center">
+        <h2 class="display-2">{{ object.name }}</h2>
+    </div>
+    <div class="row justify-content-start">
+        <h3 class="display-3">Departments list</h3>
+        <div>
+            <ul class="list-style">
+            {% for department in object.department_set.all %}
+                <li>{{ department.name }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="text-success">
+        <hr>
+    </div>
+    <h4 class="display-4">Add department</h4>
+    <div class="row justify-content-start">
+        <form action="/{{ object.short_en }}{{ object.id }}/"
+              method="post"
+              name="add">
+            {% csrf_token %}
+
+            {% bootstrap_form form_add %}
+
+            <input class="btn btn-primary"
+                   type="submit"
+                   name="SubmitAdd"
+                   value="Save">
+        </form>
+    </div>
+    <div class="text-success">
+        <hr>
+    </div>
+    <h4 class="display-4">Delete department</h4>
+    <div class="row justify-content-start">
+        <form action="/{{ object.short_en }}{{ object.id }}/"
+              method="post"
+              name="del">
+            {% csrf_token %}
+            {% bootstrap_form form_del %}
+            <input class="btn btn-primary"
+                   type="submit"
+                   name="SubmitDel"
+                   value="Delete">
+        </form>
+    </div>
+{% endblock content %}
+
+
+{% block footer %}
+{% endblock footer %}
+

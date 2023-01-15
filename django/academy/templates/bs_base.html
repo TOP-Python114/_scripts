@@ -1,0 +1,58 @@
+{% extends 'bootstrap5/bootstrap5.html' %}
+
+{% load static %}
+
+
+{% block bootstrap5_title %}
+    {{ page_title|default:"MIT" }}
+{% endblock bootstrap5_title %}
+
+
+{% block bootstrap5_extra_head %}
+{% endblock bootstrap5_extra_head %}
+
+
+{% block bootstrap5_before_content %}
+<!-- header -->
+    <div class="container-fluid">
+        {% block header %}
+            {% include "includes/navbar.html" %}
+        {% endblock header %}
+    </div>
+<!-- /header -->
+{% endblock bootstrap5_before_content %}
+
+
+{% block bootstrap5_content %}
+<!-- content -->
+    <div class="container-fluid">
+        {% block content %}
+        {% endblock content %}
+    </div>
+<!-- /content -->
+{% endblock bootstrap5_content %}
+
+
+{% block bootstrap5_after_content %}
+<!-- footer -->
+    <div class="container">
+        {% block footer %}
+            <hr>
+            <div class="row justify-content-end">
+                <div class="col">
+                    Developed for studying with Django 4.1
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <img src="{% static 'images/bottom_cr.png' %}"
+                     alt=""
+                     width="100%">
+            </div>
+        {% endblock footer %}
+    </div>
+<!-- /footer -->
+{% endblock bootstrap5_after_content %}
+
+
+{% block bootstrap5_extra_script %}
+{% endblock bootstrap5_extra_script %}

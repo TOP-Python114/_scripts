@@ -1,0 +1,16 @@
+{% extends base_template|default:"bs_base.html" %}
+
+
+{% block content %}
+
+    <div class="row justify-content-center">
+        <h1 class="display-1">Massachusetts Institute of Technology</h1>
+    </div>
+
+    <div class="row justify-content-start">
+        {% block first_part %}
+        {% endblock first_part %}
+    </div>
+
+{% endblock content %}
+
