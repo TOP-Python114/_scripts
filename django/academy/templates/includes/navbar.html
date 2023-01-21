@@ -1,6 +1,14 @@
 <div>
     <table cellpadding="20">
         <tr>
+            <td>
+                {% if user.is_authenticated %}
+                    {{ user.username }}, <a href="{% url 'logout' %}?next={{ current_url }}">logout</a>
+                {% else %}
+                    <a href="/auth/login/">Login</a>
+                {% endif %}
+            </td>
+            <td width="50px"></td>
             <td><a href="/">Main</a></td>
             <td><a href="/faculties/">Faculties</a></td>
             <td><a>About</a></td>

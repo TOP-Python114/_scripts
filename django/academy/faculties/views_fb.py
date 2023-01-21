@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http.request import HttpRequest
 from django.http.response import HttpResponseRedirect
@@ -14,7 +15,7 @@ styles = [
 
 
 def university_main_view(request: HttpRequest):
-    return render(request, 'bs_faculties/main.html')
+    return render(request, 'bs_faculties/main.html', {'current_url': request.path})
 
 
 def faculties_list_view(request: HttpRequest):
@@ -23,11 +24,12 @@ def faculties_list_view(request: HttpRequest):
         'bs_faculties/faculties_list.html',
         {
             # 'styles': styles,
+            'current_url': request.path,
             'object_list': Faculty.objects.all(),
         }
     )
 
-
+@login_required
 def faculty_view(request: HttpRequest, pk: int):
     # print(f'{act = }')
     if request.method == 'GET':
@@ -38,6 +40,7 @@ def faculty_view(request: HttpRequest, pk: int):
             'bs_faculties/faculty.html',
             {
                 # 'styles': lstyles,
+                'current_url': request.path,
                 'page_title': faculty.name,
                 'object': faculty,
                 'form_add': DepartmentAddForm(),

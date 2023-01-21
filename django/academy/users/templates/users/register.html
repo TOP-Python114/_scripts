@@ -1,0 +1,56 @@
+{% extends base_template|default:"bs_base.html" %}
+
+{% load static %}
+
+
+{% block bootstrap5_title %}
+    New user
+{% endblock bootstrap5_title %}
+
+
+{% block bootstrap5_before_content %}
+<!-- header -->
+<!-- /header -->
+{% endblock bootstrap5_before_content %}
+
+
+{% block bootstrap5_content %}
+<!-- content -->
+    <div class="container-fluid">
+        <form action="{% url 'register' %}"
+              method="post">
+            {% csrf_token %}
+            <div>
+                {{ form }}
+            </div>
+            <div>
+                <input type="submit"
+                       class="btn btn-success"
+                       value="Register">
+            </div>
+            <input type="hidden" name="next" value="{{ next }}">
+        </form>
+    </div>
+<!-- /content -->
+{% endblock bootstrap5_content %}
+
+
+{% block bootstrap5_after_content %}
+<!-- footer -->
+    <div class="container">
+        {% block footer %}
+            <hr>
+            <div class="row justify-content-end">
+                <div class="col">
+                    Developed for studying with Django 4.1
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <img src="{% static 'images/bottom_cr.png' %}"
+                     alt=""
+                     width="100%">
+            </div>
+        {% endblock footer %}
+    </div>
+<!-- /footer -->
+{% endblock bootstrap5_after_content %}
